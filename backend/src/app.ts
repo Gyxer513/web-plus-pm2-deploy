@@ -1,10 +1,10 @@
 import 'dotenv/config';
 
-import express from 'express';
+import express, { Request } from 'express';
 import mongoose from 'mongoose';
 import cookieParser from 'cookie-parser';
 import { errors } from 'celebrate';
-import cors from 'cors';
+import cors, { CorsOptions } from 'cors';
 import errorHandler from './middlewares/error-handler';
 import { DB_ADDRESS } from './config';
 import routes from './routes';
@@ -19,14 +19,22 @@ app.get('/crash-test', () => {
       throw new Error('Сервер сейчас упадёт');
     }, 0);
   });
-app.use(cors({
-  origin: [
-    'http://www.gyxer.com',
-    'https://www.gyxer.com',
-    'http://www.api.gyxer.com',
-    'http://www.api.gyxer.com',
-  ],
-}))
+  const allowlist = ['http://localhost:3000', 'https://localhost:3000'];
+  const corsOptionsDelegate = (
+    req: Request,
+    callback: (error: Error | null, corsOptions?: CorsOptions) => void,
+  ) => {
+    const corsOptions = { origin: false };
+    const header = req.header('Origin');
+  
+    if (header !== undefined && allowlist.indexOf(header) !== -1) {
+      corsOptions.origin = true; // reflect (enable) the requested origin in the CORS response
+    }
+  
+    callback(null, corsOptions); // callback expects two parameters: error and options
+  };
+  
+app.use(cors(corsOptionsDelegate));
 app.use(helmet());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
