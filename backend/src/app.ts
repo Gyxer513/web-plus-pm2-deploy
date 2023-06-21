@@ -20,7 +20,6 @@ app.get('/crash-test', () => {
   });
   
 app.use(cors());
-app.options('*', cors())
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
