@@ -19,13 +19,8 @@ app.get('/crash-test', () => {
     }, 0);
   });
   
-  app.use(cors({
-    'allowedHeaders': ['sessionId', 'Content-Type', 'athorization'],
-    'exposedHeaders': ['sessionId'],
-    'origin': '*',
-    'methods': 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    'preflightContinue': false
-  }));
+app.use(cors());
+app.options('*', cors())
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
