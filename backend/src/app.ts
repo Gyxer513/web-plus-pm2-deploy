@@ -4,34 +4,14 @@ import express, { Request } from 'express';
 import mongoose from 'mongoose';
 import cookieParser from 'cookie-parser';
 import { errors } from 'celebrate';
-<<<<<<< HEAD
 import errorHandler from './middlewares/error-handler';
 import { DB_ADDRESS } from './config';
 import routes from './routes';
-import cors from 'cors';
-=======
-import cors, { CorsOptions } from 'cors';
-import errorHandler from './middlewares/error-handler';
-import { DB_ADDRESS } from './config';
-import routes from './routes';
->>>>>>> fa1496c4936bf42087dfddda242424c3ade248b3
+import cors, {CorsOptions} from 'cors';
 const { PORT = 3000 } = process.env;
 const app = express();
 mongoose.connect(DB_ADDRESS);
 
-<<<<<<< HEAD
-app.use(cors({
-  origin: [
-    'http://new-mesto.nomoredomains.work',
-    'https://new-mesto.nomoredomains.work',
-  ],
-}));
-app.get('/crash-test', () => {
-  setTimeout(() => {
-    throw new Error('Сервер сейчас упадёт');
-  }, 0);
-}); 
-=======
 // Только для локальных тестов. Не используйте это в продакшене
 const allowlist = ['http://localhost:3000', 'https://localhost:3000'];
 const corsOptionsDelegate = (
@@ -49,7 +29,6 @@ const corsOptionsDelegate = (
 };
 
 app.use(cors(corsOptionsDelegate));
->>>>>>> fa1496c4936bf42087dfddda242424c3ade248b3
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
