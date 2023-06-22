@@ -21,8 +21,8 @@ app.get('/crash-test', () => {
   });
 app.use(cors({
   origin: [
-    'http://www.gyxer.com',
-    'https://www.gyxer.com',
+    'http://localhost:3000',
+    'https://localhost:3000',
   ],
 }))
 app.use(helmet());  
