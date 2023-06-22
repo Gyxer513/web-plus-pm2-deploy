@@ -4,14 +4,22 @@ import express, { Request } from 'express';
 import mongoose from 'mongoose';
 import cookieParser from 'cookie-parser';
 import { errors } from 'celebrate';
+<<<<<<< HEAD
 import errorHandler from './middlewares/error-handler';
 import { DB_ADDRESS } from './config';
 import routes from './routes';
 import cors from 'cors';
+=======
+import cors, { CorsOptions } from 'cors';
+import errorHandler from './middlewares/error-handler';
+import { DB_ADDRESS } from './config';
+import routes from './routes';
+>>>>>>> fa1496c4936bf42087dfddda242424c3ade248b3
 const { PORT = 3000 } = process.env;
 const app = express();
 mongoose.connect(DB_ADDRESS);
 
+<<<<<<< HEAD
 app.use(cors({
   origin: [
     'http://new-mesto.nomoredomains.work',
@@ -23,6 +31,25 @@ app.get('/crash-test', () => {
     throw new Error('Сервер сейчас упадёт');
   }, 0);
 }); 
+=======
+// Только для локальных тестов. Не используйте это в продакшене
+const allowlist = ['http://localhost:3000', 'https://localhost:3000'];
+const corsOptionsDelegate = (
+  req: Request,
+  callback: (error: Error | null, corsOptions?: CorsOptions) => void,
+) => {
+  const corsOptions = { origin: false };
+  const header = req.header('Origin');
+
+  if (header !== undefined && allowlist.indexOf(header) !== -1) {
+    corsOptions.origin = true; // reflect (enable) the requested origin in the CORS response
+  }
+
+  callback(null, corsOptions); // callback expects two parameters: error and options
+};
+
+app.use(cors(corsOptionsDelegate));
+>>>>>>> fa1496c4936bf42087dfddda242424c3ade248b3
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
