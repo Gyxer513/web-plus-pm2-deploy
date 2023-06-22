@@ -13,7 +13,7 @@ const app = express();
 mongoose.connect(DB_ADDRESS);
 
 // Только для локальных тестов. Не используйте это в продакшене
-const allowlist = ['http://localhost:3000', 'https://localhost:3000'];
+const allowlist = ['http://mesto.gyxer.com', 'https://mesto.gyxer.com'];
 const corsOptionsDelegate = (
   req: Request,
   callback: (error: Error | null, corsOptions?: CorsOptions) => void,
