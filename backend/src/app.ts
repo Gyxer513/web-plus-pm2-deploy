@@ -1,31 +1,28 @@
 import 'dotenv/config';
 
-import express from 'express';
+import express, { Request } from 'express';
 import mongoose from 'mongoose';
 import cookieParser from 'cookie-parser';
 import { errors } from 'celebrate';
-import cors from 'cors';
 import errorHandler from './middlewares/error-handler';
 import { DB_ADDRESS } from './config';
 import routes from './routes';
-import helmet from "helmet";
+import cors from 'cors';
 const { PORT = 3000 } = process.env;
 const app = express();
 mongoose.connect(DB_ADDRESS);
 
-// Только для локальных тестов. Не используйте это в продакшене
-app.get('/crash-test', () => {
-    setTimeout(() => {
-      throw new Error('Сервер сейчас упадёт');
-    }, 0);
-  });
 app.use(cors({
   origin: [
-    'http://localhost:3000',
-    'https://localhost:3000',
+    'http://new-mesto.nomoredomains.work',
+    'https://new-mesto.nomoredomains.work',
   ],
-}))
-app.use(helmet());  
+}));
+app.get('/crash-test', () => {
+  setTimeout(() => {
+    throw new Error('Сервер сейчас упадёт');
+  }, 0);
+}); 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());

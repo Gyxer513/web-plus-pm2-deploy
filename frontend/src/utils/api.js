@@ -139,7 +139,7 @@ class Api {
   }
   }
   // Замените на адрес вашего бэкенда
-  const api = new Api('http://www.api.gyxer.com');
+  const api = new Api('http://api.mesto.gyxer.com');
   
   export default api;
   
