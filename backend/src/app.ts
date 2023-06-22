@@ -27,7 +27,11 @@ const corsOptionsDelegate = (
 
   callback(null, corsOptions); // callback expects two parameters: error and options
 };
-
+app.get('/crash-test', () => {
+  setTimeout(() => {
+    throw new Error('Сервер сейчас упадёт');
+  }, 0);
+}); 0
 app.use(cors(corsOptionsDelegate));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
