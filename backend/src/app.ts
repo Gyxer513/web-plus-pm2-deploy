@@ -19,6 +19,12 @@ app.get('/crash-test', () => {
       throw new Error('Сервер сейчас упадёт');
     }, 0);
   });
+app.use(cors({
+  origin: [
+    'http://www.gyxer.com',
+    'https://www.gyxer.com',
+  ],
+}))
 app.use(helmet());  
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
